@@ -1,7 +1,38 @@
-import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+
+
+
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  File? avatarImage;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadAvatar();
+  }
+
+  Future<void> _loadAvatar() async {
+    final prefs = await SharedPreferences.getInstance();
+    final path = prefs.getString('avatarPath');
+
+    if (path != null && mounted) {
+      setState(() {
+        avatarImage = File(path);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,36 +44,42 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 10),
-
-              /// ===== Avatar =====
-              Center(
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/profile');
-                  },
-                  child: const CircleAvatar(
-                    radius: 32,
-                    backgroundColor: Colors.grey,
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 12),
-
-              /// ===== App Name =====
-              const Center(
-                child: Text(
-                  'Tammeny',
-                  style: TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xff1D3B58),
-                  ),
-                ),
-              ),
-
+              /// herrrre change
               const SizedBox(height: 8),
+
+              /// ===== TOP HEADER =====
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  /// ===== Logo / Illustration =====
+                  Image.asset(
+                    'assets/images/logo.png',
+                    height: 80,
+                    fit: BoxFit.contain,
+                  ),
+
+                  /// ===== Profile Avatar =====
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/profile');
+                    },
+                    child: CircleAvatar(
+                      radius: 24,
+                      backgroundColor: Colors.grey.shade300,
+                      backgroundImage:
+                      avatarImage != null ? FileImage(avatarImage!) : null,
+                      child: avatarImage == null
+                          ? const Icon(Icons.person, color: Colors.white)
+                          : null,
+                    ),
+                  ),
+                ],
+              ),
+
+
+
+              const SizedBox(height: 20),
 
               /// ===== Greeting =====
               const Text(
@@ -50,6 +87,7 @@ class HomeScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
+                  color: Color(0xff1D3B58),
                 ),
               ),
               const SizedBox(height: 4),
@@ -61,19 +99,19 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
 
+
               const SizedBox(height: 24),
 
               /// ===== MAIN CARDS =====
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  /// Chat with AI (LEFT – Tall, special image)
                   Expanded(
                     child: _CategoryCard(
                       title: 'Chat with AI',
                       image: 'assets/images/Chat-with-AI-home.png',
                       height: 420,
-                      isChat: true, // 👈 مهم
+                      isChat: true,
                       onTap: () {
                         Navigator.pushNamed(context, '/chat');
                       },
@@ -82,7 +120,6 @@ class HomeScreen extends StatelessWidget {
 
                   const SizedBox(width: 12),
 
-                  /// Right side (Book + Mood)
                   Expanded(
                     child: Column(
                       children: [
@@ -208,25 +245,19 @@ class _CategoryCard extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            //const Spacer(),
-
-            ///  صورة الشات متحكم فيها لوحدها
             Center(
               child: Padding(
                 padding: EdgeInsets.only(
-                  top: isChat ? 90 : 10, //  نزول الصورة الكبيرة اللي في الشات : اللي في باقي الكاردز
+                  top: isChat ? 90 : 10,
                 ),
                 child: Image.asset(
                   image,
-                  height: isChat
-                      ? height * 0.65 //  حجم اكبر للصورة اللي في الشات
-                      : height * 0.55, //   حجم باقي االكاردز
+                  height:
+                  isChat ? height * 0.65 : height * 0.55,
                   fit: BoxFit.contain,
                 ),
               ),
             ),
-
-
           ],
         ),
       ),
@@ -275,3 +306,38 @@ class _RecommendedItem extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

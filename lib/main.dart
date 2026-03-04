@@ -99,9 +99,13 @@ import 'package:tamenny/features/authentication/presentation/screens/authenticat
 import 'package:tamenny/features/authentication/data/register_view_model.dart';
 import 'package:tamenny/features/authentication/presentation/screens/landing_page.dart';
 import 'package:tamenny/features/authentication/presentation/screens/login_screen.dart';
+import 'package:tamenny/features/authentication/presentation/screens/select_role_screen.dart';
 
 // ===== Home =====
 import 'package:tamenny/features/home/presentation/screens/home_screen.dart';
+import 'package:tamenny/features/mood_tracker/presentation/screens/mood_tracker_screen.dart';
+import 'package:tamenny/features/mood_tracker/presentation/screens/setـmoodـscreen.dart';
+import 'package:tamenny/features/recommendations/presentation/screens/exercise_screens/exercise.dart';
 
 // ===== Chat =====
 import 'package:tamenny/features/chat/presentation/screens/chat_screen.dart';
@@ -110,6 +114,9 @@ import 'package:tamenny/features/chat/presentation/screens/chat_screen.dart';
 import 'package:tamenny/features/recommendations/presentation/screens/books_screen.dart';
 import 'package:tamenny/features/recommendations/presentation/screens/podcasts_screen.dart';
 import 'package:tamenny/features/recommendations/presentation/screens/mbti_test_screen.dart';
+import 'package:tamenny/features/recommendations/presentation/screens/exercise_screens/mindful_breathing.dart';
+import 'package:tamenny/features/recommendations/presentation/screens/exercise_screens/meditation.dart';
+import 'package:tamenny/features/recommendations/presentation/screens/exercise_screens/journaling.dart';
 
 // ===== Profile =====
 import 'package:tamenny/features/profile/presentation/screens/profile_screen.dart';
@@ -121,6 +128,7 @@ import 'package:tamenny/features/profile/presentation/screens/notofication.dart'
 import 'package:tamenny/features/profile/presentation/screens/language.dart';
 import 'package:tamenny/features/profile/presentation/screens/favourite.dart';
 import 'package:tamenny/features/profile/presentation/screens/emergency.dart';
+import 'package:tamenny/features/profile/presentation/screens/specialist-set-available.dart';
 
 
 // ===== Dummy / Future Screens =====
@@ -153,19 +161,24 @@ class MyApp extends StatelessWidget {
         '/landing': (_) => const AuthLandingPage(),
         '/signup': (_) => const CreateAccountScreen(),
         '/login': (_) => const LoginScreen(),
-
+        '/role': (_) => const SelectRoleScreen(),
 
         '/home': (_) => const HomeScreen(),
 
         // Home actions
         '/chat': (_) => const ChatScreen(),
         '/booking': (_) => const BookingScreen(),
-        // '/mood': (_) => const MoodTrackerScreen(),
+         '/mood': (_) => const MoodTrackerScreen(),
+        '/setmood': (_) => const SetMoodScreen(),
 
         // Recommendations
         '/books': (_) => const BooksScreen(),
         '/podcasts': (_) => const PodcastsScreen(),
         '/mbti': (_) => const MbtiLandingPage(),
+        '/exercises': (_) => const ExercisesScreen(),
+        '/exercises_mindful': (_) => const  MindfulBreathingScreen(),
+        '/exercises_meditation': (_) => const   MeditationScreen(),
+        '/exercises_journaling': (_) => const JournalingScreen  (),
 
         // Profile
         '/profile': (_) => const ProfileScreen(),
@@ -177,9 +190,10 @@ class MyApp extends StatelessWidget {
         '/language': (_) => const LanguageScreen(),
         '/favourite': (_) => const FavouriteScreen(),
         '/emergency': (_) => const EmergencyScreen(),
+        '/setAvailable': (_) => const SpecialistProfileScreen(),
       },
 
-      home: const SplashScreen(),
+      home: const SplashScreen() ,
     );
   }
 }
